@@ -52,8 +52,9 @@
 
 1. In the same policy, **Add integration → Microsoft Defender**.
 2. Enable:
+   ```bash
    - `Microsoft-Windows-Windows Defender/Operational`
-3. Save & deploy.
+4. Save & deploy.
 
 ---
 
