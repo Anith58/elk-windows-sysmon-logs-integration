@@ -15,18 +15,12 @@
    [Sysmon Download](https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon)
 
 2. **Download a Sysmon Config File**  
-   Recommended: [SwiftOnSecurity Sysmon config](https://github.com/SwiftOnSecurity/sysmon-config)
+   Recommended: [ Sysmon config](https://github.com/Anith58/Splunk-Active-Directory-Sysmon-Attack-Simulation/blob/main/splunk/sysmonconfig.xml)
 
 3. **Install Sysmon**  
    ```powershell
    sysmon64.exe -i sysmonconfig-export.xml -accepteula
    ```
-
-4. **Verify Sysmon is running**  
-   ```powershell
-   Get-Service sysmon
-   ```
-
 ---
 
 ## **2. Enroll the Windows Endpoint into Fleet**
@@ -37,19 +31,13 @@
 2. **Download Elastic Agent (Windows)** from the Fleet setup page.
 
 3. **Install & Enroll Elastic Agent**  
-   ```powershell
-   cd C:\elastic-agent
-   .\elastic-agent.exe install --url=https://<Fleet_Server_IP>:8220 --enrollment-token=<token>
-   ```
-
-4. **Verify Enrollment** in Kibana Fleet — agent should appear `online`.
 
 ---
 
 ## **3. Add Sysmon Integration in Fleet**
 
 1. In **Kibana → Fleet → Agent Policies**, select the Windows agent policy.
-2. Click **Add integration → Windows**.
+2. Click **Add integration → Search → Windows event**.
 3. Enable:
    - **Windows Event Logs**
    - Add Sysmon channel:  
@@ -91,8 +79,10 @@
      ```
   2. Check Sysmon/Defender event logs in Windows Event Viewer.
   3. **Allow Elasticsearch port 9200** in your firewall:  
-     ```powershell
-     netsh advfirewall firewall add rule name="Allow Elasticsearch" dir=in action=allow protocol=TCP localport=9200
+     ```bash
+     sudo ufw allow 9200
+     sudo ufw allow 9200/tcp
+     
      ```
 
 ---
